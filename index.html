@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .calendar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .month {
+            border: 1px solid #000;
+            margin: 10px;
+            padding: 10px;
+            width: 250px;
+        }
+        .month h3 {
+            margin: 0;
+            background-color: #007bff;
+            color: white;
+            padding: 5px;
+        }
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .day, .weekday {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+        }
+        .weekday {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>2025 Calendar</h1>
+    <div class="calendar" id="calendar"></div>
+    
+    <script>
+        const months = [
+            "January", "February", "March", "April", "May", "June", 
+            "July", "August", "September", "October", "November", "December"
+        ];
+        
+        const daysInMonth = (month, year) => new Date(year, month, 0).getDate();
+        const getFirstDay = (month, year) => new Date(year, month - 1, 1).getDay();
+        
+        function createCalendar() {
+            const calendarDiv = document.getElementById("calendar");
+            for (let i = 1; i <= 12; i++) {
+                let monthDiv = document.createElement("div");
+                monthDiv.classList.add("month");
+                monthDiv.innerHTML = `<h3>${months[i - 1]} 2025</h3>`;
+                
+                let daysDiv = document.createElement("div");
+                daysDiv.classList.add("days");
+                
+                const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                weekdays.forEach(day => {
+                    let dayDiv = document.createElement("div");
+                    dayDiv.classList.add("weekday");
+                    dayDiv.textContent = day;
+                    daysDiv.appendChild(dayDiv);
+                });
+                
+                let firstDay = getFirstDay(i, 2025);
+                let totalDays = daysInMonth(i, 2025);
+                
+                for (let j = 0; j < firstDay; j++) {
+                    let emptyDiv = document.createElement("div");
+                    daysDiv.appendChild(emptyDiv);
+                }
+                
+                for (let d = 1; d <= totalDays; d++) {
+                    let dayDiv = document.createElement("div");
+                    dayDiv.classList.add("day");
+                    dayDiv.textContent = d;
+                    daysDiv.appendChild(dayDiv);
+                }
+                
+                monthDiv.appendChild(daysDiv);
+                calendarDiv.appendChild(monthDiv);
+            }
+        }
+        
+        createCalendar();
+    </script>
+</body>
+</html>
